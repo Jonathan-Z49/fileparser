@@ -1,57 +1,68 @@
 package com.example.backend.services;
 
 import com.example.backend.models.Field;
+import com.example.backend.models.Record;
+import com.example.backend.repository.RecordRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
+import java.io.*;
 import java.util.*;
 
 @Service
 public class FileService {
 
-    public String readCompleteChars(File file) throws IOException {
-        FileInputStream stream = new FileInputStream(file);
-        InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
-        StringBuilder builder = new StringBuilder();
-        while(reader.ready()) {
-            builder.append((char)reader.read());
-        }
-        return builder.toString();
-    }
-    public String readAllBytes(File file) throws IOException {
-        return new String(Files.readAllBytes(file.toPath())).intern();
+    //TODO
+    // Store parsed files in DB
+    // Store file metadata in DB
+    private final RecordRepository recordRepository;
+
+    @Autowired
+    public FileService(RecordRepository recordRepository){
+        this.recordRepository = recordRepository;
     }
 
-    public Map<String, Field> parseSpec(File specFile) throws IOException {
+    public String parseFiles(MultipartFile specFile, MultipartFile dataFile) throws IOException {
+        return parseRecords(parseSpec(specFile), dataFile);
+    }
+
+    public Map<String, Field> parseSpec(MultipartFile specFile) throws IOException {
+
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Field> map = mapper.readValue(specFile, new TypeReference<Map<String, Field>>() {});
+        Map<String, Field> map = mapper.readValue(specFile.getBytes(), new TypeReference<Map<String, Field>>() {});
 
         Set<String> keySet = map.keySet();
         for(String s : keySet) {
             map.get(s).setName(s);
         }
-
-        System.out.println(map);
         return map;
     }
 
-    public Map<Field, String> readStringFields(String data, Map<String, Field> spec) throws IOException {
-        Map<Field, String> fileData = new HashMap<>();
+    public String parseRecords(Map<String, Field> spec, MultipartFile dataFile) throws IOException {
 
-        Set<String> fields = spec.keySet();
-        for(String fieldName : fields) {
-            Field field = spec.get(fieldName);
-            String fieldValue = data.substring(field.getStartPosition(), field.getStartPosition()+1).trim();
-            fileData.put(field, fieldValue);
-            System.out.println("[" + fieldName + "][" + fieldValue + "]");
-        }
-        return fileData;
+        InputStream inputStream = dataFile.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+        List<Map<String, String>> records = bufferedReader.lines().map(line -> {
+            Map<String, String> parsedData = new HashMap<>();
+            Set<String> fields = spec.keySet();
+            for(String fieldName : fields) {
+                Field field = spec.get(fieldName);
+                String fieldValue = line.substring(field.getStartPosition(), field.getEndPosition()+1).trim();
+                parsedData.put(fieldName, fieldValue);
+            }
+            return parsedData;
+        }).toList();
+
+        records.forEach(pair -> {
+            System.out.println(pair.keySet());
+            System.out.println(pair.values());
+        });
+
+        return records.toString();
     }
+
 }
