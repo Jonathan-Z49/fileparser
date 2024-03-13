@@ -13,6 +13,10 @@ public class Field {
     @JsonProperty("data_type")
     private String dataType;
 
+    public Field(){
+
+    }
+
     public Field(String name, Integer startPosition, Integer endPosition, String dataType) {
         this.name = name;
         this.startPosition = startPosition;
@@ -32,6 +36,7 @@ public class Field {
         return startPosition;
     }
 
+    @JsonProperty("start_position")
     public void setStartPosition(Integer startPosition) {
         this.startPosition = startPosition;
     }
@@ -40,6 +45,7 @@ public class Field {
         return endPosition;
     }
 
+    @JsonProperty("end_position")
     public void setEndPosition(Integer endPosition) {
         this.endPosition = endPosition;
     }
@@ -48,6 +54,7 @@ public class Field {
         return dataType;
     }
 
+    @JsonProperty("data_type")
     public void setDataType(String dataType) {
         this.dataType = dataType;
     }
