@@ -1,8 +1,8 @@
 package com.example.backend.services;
 
 import com.example.backend.models.Field;
-import com.example.backend.models.Record;
-import com.example.backend.repository.RecordRepository;
+import com.example.backend.models.Metadata;
+import com.example.backend.repository.MetaDataRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +16,16 @@ import java.util.*;
 public class FileService {
 
     //TODO
-    // Store parsed files in DB
-    // Store file metadata in DB
-    private final RecordRepository recordRepository;
+    // add user auth (maybe google oauth?)
+    // aws s3 file storage
+
+    private final MetaDataService metaDataService;
+    private final FlatDataService flatDataService;
 
     @Autowired
-    public FileService(RecordRepository recordRepository){
-        this.recordRepository = recordRepository;
+    public FileService(MetaDataService metaDataService, FlatDataService flatDataService){
+        this.metaDataService = metaDataService;
+        this.flatDataService =flatDataService;
     }
 
     public String parseFiles(MultipartFile specFile, MultipartFile dataFile) throws IOException {
@@ -42,7 +45,6 @@ public class FileService {
     }
 
     public String parseRecords(Map<String, Field> spec, MultipartFile dataFile) throws IOException {
-
         InputStream inputStream = dataFile.getInputStream();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -57,12 +59,8 @@ public class FileService {
             return parsedData;
         }).toList();
 
-        records.forEach(pair -> {
-            System.out.println(pair.keySet());
-            System.out.println(pair.values());
-        });
-
-        return records.toString();
+        Metadata fileMetaData = metaDataService.createFileMetaData(dataFile);
+        return flatDataService.createFlatData(records, fileMetaData).toString();
     }
 
 }
