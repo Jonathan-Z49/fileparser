@@ -25,6 +25,11 @@ public class Metadata {
         this.fileName = fileName;
     }
 
+    public Metadata(long bytes, String fileName) {
+        this.bytes = bytes;
+        this.fileName = fileName;
+    }
+
     public String getId() {
         return id;
     }
