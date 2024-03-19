@@ -17,9 +17,7 @@ public class MetaDataService {
     }
 
     public Metadata createFileMetaData(MultipartFile file) {
-        Metadata metadata = new Metadata();
-        metadata.setFileName(file.getOriginalFilename());
-        metadata.setBytes(file.getSize());
+        Metadata metadata = new Metadata(file.getSize(), file.getOriginalFilename());
         return metaDataRepository.save(metadata);
     }
 }
