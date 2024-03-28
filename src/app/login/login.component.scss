@@ -11,7 +11,6 @@
 
   .login-card {
     width: 20rem;
-
     p {
         width: 90%;
     }
@@ -32,12 +31,10 @@
     background-color: red;
   }
 
-  .button-login {
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  .button-register {
+  .button-login, .button-register {
     display: flex;
     justify-content: space-between;
+    a {
+      text-decoration: none;
+    }
   }
