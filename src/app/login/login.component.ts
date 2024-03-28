@@ -9,6 +9,7 @@ import { AuthService } from '../services/auth.service';
 import { JWTRes } from '../interfaces/JWTres';
 import { Router, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
+import { StorageService } from '../services/storage.service';
 
 
 @Component({
@@ -34,7 +35,7 @@ export class LoginComponent {
 
   hide = true;
 
-  constructor(private authService: AuthService, private router: Router){
+  constructor(private authService: AuthService, private storageService: StorageService ,private router: Router){
 
   }
 
@@ -51,19 +52,35 @@ export class LoginComponent {
     if(this.profileForm.valid){
       const username: string = this.profileForm.controls.username.value!;
       const password = this.profileForm.controls.password.value!;
-      this.authService.login(username, password).subscribe({
-        next: (data: JWTRes) => {
-          console.log(data);
-        }, error: err => {
-          console.log(err);
-        }
-      })
-      
+      if(this.title == 'Login'){
+        this.login(username,password);
+      } else {
+        this.signup(username, password);
+      }
     }
   }
 
-  navigateToLogin() {
+  login(username: string, password: string) {
+    this.authService.login(username, password).subscribe({
+      next: (data: JWTRes) => {
+        console.log(data);
+        this.storageService.setUser(data);
+        this.router.navigate(['files']);
+      }, error: err => {
+        console.log(err);
+      }
+    });
+  }
 
+  signup(username: string, password: string){
+    this.authService.signup(username, password).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.router.navigate(['login']);
+      }, error: err => {
+        console.log(err);
+      }
+    });
   }
 
 }
