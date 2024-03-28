@@ -26,4 +26,15 @@ export class AuthService {
     );
   }
 
+  signup(username: string, password: string): Observable<any> {
+    return this.http.post(
+      SERVER_URL + 'signup',
+      {
+        username,
+        password,
+      },
+      {responseType: 'text'}
+    );
+  }
+
 }
