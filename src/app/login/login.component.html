@@ -27,10 +27,11 @@
 
       <div [ngClass]="{'button-login': title === 'Login', 'button-register': title === 'Register'}">
         @if (title === 'Login') {
-          <button class="btn-login" mat-flat-button>Login</button>
+          <button class="btn-auth" mat-flat-button><a routerLink="/register">Don't have an account?</a></button>
+          <button class="btn-auth" type="submit" mat-flat-button>Login</button>
         } @else {
-          <button class="btn-register" mat-flat-button><a routerLink="/login">Already Registered?</a></button>
-          <button class="btn-login" mat-flat-button>Register</button>
+          <button class="btn-auth" mat-flat-button><a routerLink="/login">Already Registered?</a></button>
+          <button class="btn-auth" type="submit" mat-flat-button>Register</button>
         }
       </div>
     </form>
