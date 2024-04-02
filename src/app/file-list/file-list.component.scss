@@ -1,0 +1,16 @@
+mat-list-item {
+    * {
+        cursor: pointer;
+    }
+    margin-bottom: .7rem;
+}
+
+.download-btn {
+    float: right;
+    background-color: green;
+    color: white;
+}
+
+mat-card {
+    width: 30rem;
+}
