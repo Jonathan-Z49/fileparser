@@ -1,14 +1,8 @@
 <mat-list>
-    <div mat-subheader>Files</div>
+    <div mat-subheader>files</div>
         <mat-card>
             @for (files of this.metadata; track files.id; let i = $index ) {
-                <mat-list-item>
-                  <mat-icon matListItemIcon fontIcon="note"></mat-icon>
-                  <div matListItemTitle>{{files.fileName}}</div>
-                  <div matListItemLine>{{files.createdAt | date}}</div>
-                  <button mat-flat-button class="download-btn">Download</button>
-                </mat-list-item>
-                
+                <app-file-list-item [fileMetadata]="files" ></app-file-list-item>
                 @if (i != this.metadata.length - 1) {
                     <mat-divider></mat-divider>
                 }

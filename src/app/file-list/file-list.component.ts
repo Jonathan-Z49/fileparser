@@ -1,24 +1,26 @@
 import { AfterViewInit, Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Metadata } from '../interfaces/Metadata';
-import { FlatRecordService } from '../services/flat-record.service';
+import { MetadataService } from '../services/metadata.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { DatePipe } from '@angular/common';
-import { MatCard } from '@angular/material/card';
+import { MatCard, MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
+import { FileListItemComponent } from "../file-list-item/file-list-item.component";
 
 @Component({
-  selector: 'app-file-list',
-  standalone: true,
-  imports: [MatListModule, MatIconModule, MatDividerModule, DatePipe, MatCard, MatButtonModule],
-  templateUrl: './file-list.component.html',
-  styleUrl: './file-list.component.scss'
+    selector: 'app-file-list',
+    standalone: true,
+    templateUrl: './file-list.component.html',
+    styleUrl: './file-list.component.scss',
+    imports: [MatListModule, MatIconModule, MatDividerModule, DatePipe, MatCardModule, MatButtonModule, FileListItemComponent]
 })
 export class FileListComponent implements OnInit {
 
-  constructor(private flatRecordService: FlatRecordService){
+  constructor(private metaDataService: MetadataService, private router: Router){
 
   }
   
@@ -26,12 +28,11 @@ export class FileListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getMetadata(); 
-    console.log(this.metadata);
+    this.getMetadata(this.router.url); 
   }
 
-  getMetadata() {
-    this.flatRecordService.getSpecFiles().subscribe({
+  getMetadata(typeURL: string) {
+    this.metaDataService.getMetadataFiles(typeURL).subscribe({
       next: (data: Metadata[]) => {
         this.metadata = data;
       },

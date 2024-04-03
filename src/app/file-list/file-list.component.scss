@@ -5,10 +5,18 @@ mat-list-item {
     margin-bottom: .7rem;
 }
 
+.records-btn {
+    float: right;
+    background-color: green;
+    color: white;
+}
+
 .download-btn {
     float: right;
     background-color: green;
     color: white;
+    margin-left: .5rem;
+
 }
 
 mat-card {
