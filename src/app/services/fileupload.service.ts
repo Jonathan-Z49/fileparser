@@ -21,7 +21,7 @@ export class FileuploadService {
     const headers = new HttpHeaders()
       .set('Authorization', 'Bearer ' + this.storageService.getUser()?.accessToken);
     
-    return this.http.post(SERVER_URL, formData, {headers, responseType: 'text'});
+    return this.http.post(SERVER_URL, formData, {headers});
   }
 
 }
