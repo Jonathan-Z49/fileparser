@@ -25,3 +25,8 @@ ul {
   .file-control {
     margin: 3rem;
   }
+
+  .upload-btn:not(:disabled) {
+    background-color: green;
+    color: white;
+  }
