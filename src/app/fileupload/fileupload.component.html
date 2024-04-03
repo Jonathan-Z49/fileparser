@@ -25,10 +25,11 @@
         [disabled]="!(flatFile && specFile)"
         (click)="upload()"
         mat-stroked-button
+        class="upload-btn"
       >
         Upload
       </button>
     </mat-list-item>
   </mat-list>
 </div>
-<app-records [records]="allRecords.arr"></app-records>
+<app-records [records]="allRecords"></app-records>
