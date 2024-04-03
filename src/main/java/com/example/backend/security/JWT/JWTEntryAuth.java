@@ -1,8 +1,8 @@
 package com.example.backend.security.JWT;
 
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import java.io.IOException;
+
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
