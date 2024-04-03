@@ -1,5 +1,6 @@
 package com.example.backend.models;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
@@ -16,17 +17,32 @@ public class Flatdata {
     private Map<String, String> data;
 
     @DocumentReference
-    @Field("fileMetaData")
-    private Metadata metadata;
+    @Field("fileFlatData")
+    private Metadata flatFile;
+
+    @DocumentReference
+    @Field("fileSpecData")
+    private Metadata specFile;
+
+    @Field("user")
+    private ObjectId user;
 
     public Flatdata() {
 
     }
 
-    public Flatdata(String id, Map<String, String> data ,Metadata metadata) {
+    public Flatdata(String id, Map<String, String> data ,Metadata flatFile, Metadata specFile) {
         this.id = id;
         this.data = data;
-        this.metadata = metadata;
+        this.flatFile = flatFile;
+        this.specFile = specFile;
+    }
+
+    public Flatdata(Map<String, String> data ,Metadata flatFile, Metadata specFile,ObjectId userId) {
+        this.data = data;
+        this.flatFile = flatFile;
+        this.specFile = specFile;
+        this.user = userId;
     }
 
     public String getId() {
@@ -45,12 +61,28 @@ public class Flatdata {
         this.data = data;
     }
 
-    public Metadata getMetadata() {
-        return metadata;
+    public Metadata getFlatFile() {
+        return flatFile;
     }
 
-    public void setMetadata(Metadata metadata) {
-        this.metadata = metadata;
+    public void setFlatFile(Metadata flatFile) {
+        this.flatFile = flatFile;
+    }
+
+    public Metadata getSpecFile() {
+        return specFile;
+    }
+
+    public void setSpecFile(Metadata specFile) {
+        this.specFile = specFile;
+    }
+
+    public String getUser() {
+        return user.toString();
+    }
+
+    public void setUser(ObjectId user) {
+        this.user = user;
     }
 
     @Override
