@@ -7,11 +7,12 @@ import { MatButton } from '@angular/material/button';
 import { MatDivider } from '@angular/material/divider';
 import { ParsedData } from '../interfaces/ParsedDataRes';
 import { RecordsComponent } from '../records/records.component';
+import {MatTabsModule} from '@angular/material/tabs'
 
 @Component({
   selector: 'app-fileupload',
   standalone: true,
-  imports: [MatList, MatDivider, MatListItem, MatButton, RecordsComponent],
+  imports: [MatList, MatDivider, MatListItem, MatButton, MatTabsModule, RecordsComponent],
   templateUrl: './fileupload.component.html',
   styleUrl: './fileupload.component.scss'
 })
@@ -21,8 +22,7 @@ export class FileuploadComponent {
 
   specFile?: File;
   flatFile?: File;
-
-  allRecords = {arr: []};
+  allRecords: ParsedData[] = [];
 
   selectSpecFile(event: any): void { 
     this.specFile = event.target.files[0];
@@ -34,9 +34,9 @@ export class FileuploadComponent {
 
   upload(): void {
     this.fileUploadService.upload(this.specFile!, this.flatFile!).subscribe({
-      next: (data: any) => {
+      next: (data: ParsedData[]) => {
         console.log(data);
-        this.allRecords = {arr: JSON.parse(data)};
+        this.allRecords = data;
       },
       error: (err: HttpErrorResponse) => {
         console.log(err);
