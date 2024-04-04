@@ -50,11 +50,10 @@ public class FileController {
         return ResponseEntity.ok(data);
     }
 
-    @GetMapping("/files")
-    public ResponseEntity<?> downloadFile(@RequestParam("fileName") @NotBlank @NotNull String fileName) throws IOException {
-        Object response = s3FileService.downloadFile(fileName);
-
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"").body(response);
+    @GetMapping("/files/{name}/{id}")
+    public ResponseEntity<?> downloadFile(@PathVariable("name") @NotBlank @NotNull String name, @PathVariable("id") @NotBlank @NotNull String id) throws IOException {
+        Object response = s3FileService.downloadFile(name, id);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + name + "\"").body(response);
     }
 
     @GetMapping("/files/flat")
