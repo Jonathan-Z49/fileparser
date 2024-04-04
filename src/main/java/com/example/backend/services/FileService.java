@@ -4,6 +4,7 @@ import com.example.backend.models.Field;
 import com.example.backend.models.Flatdata;
 import com.example.backend.models.Metadata;
 import com.example.backend.repository.MetaDataRepository;
+import com.example.backend.s3.S3FileService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
