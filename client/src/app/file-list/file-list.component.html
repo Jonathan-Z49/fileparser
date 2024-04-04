@@ -1,0 +1,12 @@
+<mat-list>
+    <div mat-subheader>files</div>
+        <mat-card>
+            @for (files of this.metadata; track files.id; let i = $index ) {
+                <app-file-list-item [fileMetadata]="files" ></app-file-list-item>
+                @if (i != this.metadata.length - 1) {
+                    <mat-divider></mat-divider>
+                }
+              }
+        </mat-card>
+    
+  </mat-list>

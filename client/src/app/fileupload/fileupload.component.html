@@ -1,0 +1,35 @@
+<div class="file-control">
+  <mat-list>
+    <mat-list-item>
+      <button mat-stroked-button>
+        <label for="specFile">Choose Spec File</label>
+      </button>
+      <input type="file" id="specFile" (change)="selectSpecFile($event)" />
+      @if (specFile) {
+      <span>{{ specFile.name }}</span>
+      }
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item
+      ><button mat-stroked-button>
+        <label for="flatFile">Choose Flat File</label>
+      </button>
+      <input type="file" id="flatFile" (change)="selectFlatFile($event)" />
+      @if (flatFile) {
+      <span>{{ flatFile.name }}</span>
+      }
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <button
+        [disabled]="!(flatFile && specFile)"
+        (click)="upload()"
+        mat-stroked-button
+        class="upload-btn"
+      >
+        Upload
+      </button>
+    </mat-list-item>
+  </mat-list>
+</div>
+<app-records [records]="allRecords"></app-records>
