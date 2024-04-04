@@ -14,7 +14,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { NgClass } from '@angular/common';
-import { map, Observable } from 'rxjs';
 import { RecordService } from '../services/record.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -47,6 +46,11 @@ export class RecordsComponent implements OnChanges, AfterViewInit, OnInit {
 
   @ViewChild(MatSort) sort!: MatSort;
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   ngOnInit() {
     this.recordId = this.activatedRoute.snapshot.paramMap.get('id');
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
@@ -58,12 +62,16 @@ export class RecordsComponent implements OnChanges, AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+      if(this.records.length){
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
   }
 
   ngOnChanges() {
-    this.setup();
+      if(this.records.length) {
+        this.setup();
+      }
   }
 
   parseFields() {
@@ -83,9 +91,9 @@ export class RecordsComponent implements OnChanges, AfterViewInit, OnInit {
     this.recordService.getRecordsByFile(fileId).subscribe({
       next: (data: ParsedData[]) => {
         this.records = data;
-        this.setup();
         console.log(data);
         
+        this.setup();
       },
       error: (err: HttpErrorResponse) => {
         console.log(err);
