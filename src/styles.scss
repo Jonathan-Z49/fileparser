@@ -2,15 +2,25 @@
 @import "@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 app-root {
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 3rem;
 }
 
 html, body {
-    min-height: 100vh;
+    min-height: 100%;
+    height: 100vh;
     margin: 0;
-    padding-bottom: 2rem;
+    padding: 0;
+}
+
+app-fileupload {
+    margin-top: 9rem;
+    padding-bottom: 4rem;
+}
+
+app-file-list {
+    margin-top: 5rem;
+    padding-bottom: 4rem;
 }
