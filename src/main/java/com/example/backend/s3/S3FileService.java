@@ -44,9 +44,9 @@ public class S3FileService {
         file.delete();
     }
 
-    public Object downloadFile(String fileName) throws IOException {
+    public Object downloadFile(String fileName, String fileId) throws IOException {
 
-        S3Object object = s3Client.getObject(bucketName, fileName);
+        S3Object object = s3Client.getObject(bucketName, fileId);
         try (S3ObjectInputStream s3is = object.getObjectContent()) {
             try (FileOutputStream fileOutputStream = new FileOutputStream(fileName)) {
                 byte[] read_buf = new byte[1024];
