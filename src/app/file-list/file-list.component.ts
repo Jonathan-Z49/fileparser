@@ -20,6 +20,8 @@ import { FileListItemComponent } from "../file-list-item/file-list-item.componen
 })
 export class FileListComponent implements OnInit {
 
+  urlRoute = ''
+
   constructor(private metaDataService: MetadataService, private router: Router){
 
   }
@@ -29,6 +31,7 @@ export class FileListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMetadata(this.router.url); 
+    this.urlRoute = this.router.url.slice(7);
   }
 
   getMetadata(typeURL: string) {

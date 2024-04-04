@@ -1,5 +1,11 @@
 <mat-list>
-    <div mat-subheader>files</div>
+    @if (this.metadata.length) {
+        <div mat-subheader>{{this.urlRoute === 'flat' ? 'Fixed Flat Files' : 'Specification Files'}}</div>
+    } @else {
+        <h1>
+            Sorry, there is no data!
+        </h1>
+    }
         <mat-card>
             @for (files of this.metadata; track files.id; let i = $index ) {
                 <app-file-list-item [fileMetadata]="files" ></app-file-list-item>
