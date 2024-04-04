@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { Metadata } from '../interfaces/Metadata';
 import { Route, Router } from '@angular/router';
+import { FileDownloadService } from '../services/file-download.service';
 
 @Component({
   selector: 'app-file-list-item',
@@ -18,8 +19,25 @@ import { Route, Router } from '@angular/router';
 export class FileListItemComponent {
     @Input() fileMetadata!: Metadata;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private fileDownloadService: FileDownloadService) {
 
+    }
+
+    downloadFile(){
+      this.fileDownloadService.downloadFile(this.fileMetadata.fileName, this.fileMetadata.id).subscribe(res => {
+        this.saveFile(res.body!)
+      })
+    }
+
+    saveFile(blob: Blob) {
+      const downloadLink = document.createElement('a');
+      const url = window.URL.createObjectURL(blob);
+      downloadLink.href = url;
+      downloadLink.download = this.fileMetadata.fileName;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      window.URL.revokeObjectURL(url);
     }
 
     navigateToRecordPage() {

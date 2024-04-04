@@ -20,6 +20,17 @@ ul {
     button {
         width: 10rem;
     }
+    span {
+      float: right;
+    }
+  }
+
+  .active {
+    width: 7rem;
+  }
+
+  .empty {
+    width: 15rem;
   }
 
   .file-control {

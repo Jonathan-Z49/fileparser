@@ -2,6 +2,6 @@
     <mat-icon matListItemIcon fontIcon="note"></mat-icon>
     <div matListItemTitle>{{fileMetadata.fileName}}</div>
     <div matListItemLine>{{fileMetadata.createdAt | date}}</div>
-    <button mat-flat-button class="download-btn">Download</button>
+    <button mat-flat-button class="download-btn" (click)="downloadFile()">Download</button>
     <button mat-flat-button class="records-btn" (click)="navigateToRecordPage()" >View Records</button>
   </mat-list-item>

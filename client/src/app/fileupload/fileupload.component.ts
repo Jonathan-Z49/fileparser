@@ -8,11 +8,12 @@ import { MatDivider } from '@angular/material/divider';
 import { ParsedData } from '../interfaces/ParsedDataRes';
 import { RecordsComponent } from '../records/records.component';
 import {MatTabsModule} from '@angular/material/tabs'
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-fileupload',
   standalone: true,
-  imports: [MatList, MatDivider, MatListItem, MatButton, MatTabsModule, RecordsComponent],
+  imports: [MatList, MatDivider, MatListItem, MatButton, MatTabsModule, RecordsComponent, NgClass],
   templateUrl: './fileupload.component.html',
   styleUrl: './fileupload.component.scss'
 })
