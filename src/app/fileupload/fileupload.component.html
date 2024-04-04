@@ -4,7 +4,7 @@
       <button mat-stroked-button>
         <label for="specFile">Choose Spec File</label>
       </button>
-      <input type="file" id="specFile" (change)="selectSpecFile($event)" />
+      <input type="file" id="specFile" [ngClass]="{'active': specFile != undefined, 'empty' : specFile == undefined}" (change)="selectSpecFile($event)" />
       @if (specFile) {
       <span>{{ specFile.name }}</span>
       }
@@ -14,7 +14,7 @@
       ><button mat-stroked-button>
         <label for="flatFile">Choose Flat File</label>
       </button>
-      <input type="file" id="flatFile" (change)="selectFlatFile($event)" />
+      <input type="file" id="flatFile" [ngClass]="{'active': flatFile != undefined, 'empty' : flatFile == undefined}" (change)="selectFlatFile($event)" />
       @if (flatFile) {
       <span>{{ flatFile.name }}</span>
       }
@@ -33,3 +33,4 @@
   </mat-list>
 </div>
 <app-records [records]="allRecords"></app-records>
+
